@@ -5,6 +5,14 @@ import './App.scss';
 import PrivateRoute from './views/PrivateRoute/privateRoute';
 
 
+// "start": "set PORT=8080 && react-scripts start",
+//     "build": "react-scripts build",
+//     "test": "react-scripts test",
+//     "test:cov": "npm test -- --coverage --watchAll=false",
+//     "test:debug": "react-scripts --inspect-brk test --runInBand",
+//     "eject": "react-scripts eject",
+//     "heroku-postbuild": "npm run build"
+
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 
 // Containers

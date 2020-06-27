@@ -6,8 +6,8 @@ import { watchSetCompanyPlant } from './setCompanyPlantSagas';
 
 
 export function fakeAuthorize(username, password) {
-    const LOGIN_API_ENDPOINT = 'https://dev.dmsc.com.vn/CustPATC/TokenResource.svc/';
-    //const LOGIN_API_ENDPOINT = 'https://epic.dmsc.com.vn:8443/TestEpicor1014/TokenResource.svc/';
+    //const LOGIN_API_ENDPOINT = 'https://dev.dmsc.com.vn/CustPATC/TokenResource.svc/';
+    const LOGIN_API_ENDPOINT = 'https://epic.dmsc.com.vn:8443/TestEpicor1014/TokenResource.svc/';
     const parameters = {
         method: 'POST',
         headers: {
