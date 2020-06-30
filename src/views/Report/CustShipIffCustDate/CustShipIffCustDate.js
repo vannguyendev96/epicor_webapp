@@ -44,7 +44,40 @@ class CustShipIffCustDate extends Component {
             isLoadingSummary: false,
             data_Summary: [],
             totalRecord_Summary: 0,
+            permission: false
         };
+    }
+
+   
+    async componentDidMount(){  
+        await this.check_Permission();
+    }
+
+    //check permission
+    async check_Permission(){
+        const token = getCookie("token");
+        const username = localStorage.getItem('username');
+        const parameters = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + token,
+                'Access-Control-Allow-Origin': '*',
+            },
+        };
+
+        const GetData_API_ENDPOINT = API_CUST + `Ice.BO.SecuritySvc/Securities?$select=AllowAccess&$filter=SecCode%20eq%20'web_app'`;
+        await fetch(GetData_API_ENDPOINT, parameters)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                var groupList = responseJson.value[0].AllowAccess;
+                if (groupList.includes(username) == true) {
+                   this.setState({ permission : true})
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
 
@@ -68,11 +101,20 @@ class CustShipIffCustDate extends Component {
                 isLoadingSummary: true
             })
             if (page === 1) {
+                const totalRecord_Summary = await this.get_totalSummary();
+                this.setState({
+                    totalRecord_Summary: totalRecord_Summary
+                })
+            }
+            this.getdata_Summary(1);
+
+            if (page === 1) {
                 const totalRecord = await this.getTotal_glAccountShipNotInvoice();
                 this.setState({
                     totalRecord_glAccountShipNotInvoice: totalRecord
                 })
             }
+            this.getdata_glAccountShipNotInvoice(1);
 
             if (page === 1) {
                 const totalRecord_CustShip = await this.getTotal_CustShip();
@@ -80,18 +122,11 @@ class CustShipIffCustDate extends Component {
                     totalRecord_CustShip: totalRecord_CustShip
                 })
             }
-
-            if (page === 1) {
-                const totalRecord_Summary = await this.get_totalSummary();
-                this.setState({
-                    totalRecord_Summary: totalRecord_Summary
-                })
-            }
-
-
-            this.getdata_glAccountShipNotInvoice(1);
             this.getdata_CustShip(1);
-            this.getdata_Summary(1);
+
+            
+            
+            
         }
     }
 
@@ -550,7 +585,12 @@ class CustShipIffCustDate extends Component {
     }
 
     render() {
-
+        const { permission } = this.state;
+        if(!permission){
+            return(
+                <div>Bạn không có quyền vào màn hình này!</div>
+            )
+        }
         return (
             <div className="animated fadeIn">
                 <Row>

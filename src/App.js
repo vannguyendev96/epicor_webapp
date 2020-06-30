@@ -13,6 +13,13 @@ import PrivateRoute from './views/PrivateRoute/privateRoute';
 //     "eject": "react-scripts eject",
 //     "heroku-postbuild": "npm run build"
 
+// "dev": "react-scripts start",
+//     "start": "serve -s build",
+//     "build": "react-scripts build",
+//     "test": "react-scripts test --env=jsdom",
+//     "eject": "react-scripts eject",
+//     "heroku-postbuild": "npm run build"
+
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 
 // Containers

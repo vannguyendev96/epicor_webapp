@@ -7,14 +7,20 @@ let initialState = {
 };
 
 const SetCompanyPlant = (state = initialState , action) => {
+    let newState;
     switch (action.type) {
         case actionTypes.GetCompanyPlant_SUCCESS:
-            let result = {
-                company :  action.payload.company,
-                plant :    action.payload.plant,
-                error:     "",
-            };
-            return result;
+            // console.log("Set")
+            // let result = {
+            //     company :  action.payload.company,
+            //     plant :    action.payload.plant,
+            //     error:     "",
+            // };
+            // return result;
+            newState = { ...state, company: action.payload.company,plant : action.payload.plant,error:"" };
+            newState.company = action.payload.company;
+            newState.plant = action.payload.plant;
+            return newState;
         default:
             return state;
     }

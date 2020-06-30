@@ -45,6 +45,31 @@ class HomePage extends Component {
         }
         await this.setData();
 
+        this.setUserName();
+    }
+
+    //set user name
+    async setUserName(){
+        const token = getCookie("token");
+        const userinfo = localStorage.getItem('userinfo');
+        const parameters = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + token,
+                'Access-Control-Allow-Origin': '*',
+            },
+        };
+
+        const GetData_API_ENDPOINT = API_CUST + `Erp.BO.UserFileSvc/UserFiles?$select=Name&$filter=DcdUserID%20eq%20'${userinfo}'`;
+        await fetch(GetData_API_ENDPOINT, parameters)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                localStorage.setItem('username',responseJson.value[0].Name);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     async setData() {
@@ -103,7 +128,6 @@ class HomePage extends Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 var count = responseJson.value.length;
-                console.log("count " + count)
                 let drop_down_data = [];
                 for (var i = 0; i < count; i++) {
                     drop_down_data.push({
@@ -127,14 +151,18 @@ class HomePage extends Component {
     async get_dataPlant(company) {
         const token = getCookie("token");
         let setting = '{"Company":"' + company + '"}';
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', 'Basic ' + token);
+        headers.append('Access-Control-Allow-Origin', '*');
+        if(company !== null){
+            headers.append('CallSettings', setting);
+        }
+
         const parameters = {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + token,
-                'Access-Control-Allow-Origin': '*',
-                'CallSettings': setting
-            },
+            headers: headers,
         };
 
         const GetData_API_ENDPOINT = API_CUST + 'Erp.BO.PlantSvc/Plants?$select=Plant1%2CName';
@@ -259,7 +287,7 @@ const mapStateToProps = (state) => {
     return {
         company: state.SetCompanyPlant.company,
         plant: state.SetCompanyPlant.plant,
-        userinfo: state.login.userinfo,
+        token: state.login.token
     };
 }
 

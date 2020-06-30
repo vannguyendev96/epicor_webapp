@@ -30,6 +30,7 @@ class Login extends Component {
     const token = this.props.token;
     if(token !== null){
       setCookie('token', token, 1);
+      localStorage.setItem('userinfo',this.state.username);
     }
 
     return (

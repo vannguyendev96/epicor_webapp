@@ -52,10 +52,11 @@
     "react-scripts": "^3.4.1"
   },
   "scripts": {
-    "dev": "react-scripts start",
-    "start": "serve -s build",
+    "start": "set PORT=8080 && react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
+    "test:cov": "npm test -- --coverage --watchAll=false",
+    "test:debug": "react-scripts --inspect-brk test --runInBand",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
   },

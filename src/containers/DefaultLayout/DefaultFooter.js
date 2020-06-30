@@ -11,14 +11,14 @@ const defaultProps = {};
 
 class DefaultFooter extends Component {
   render() {
-
+    const userinfo = localStorage.getItem("username");
     // eslint-disable-next-line
     const { children, ...attributes } = this.props;
 
     return (
       <React.Fragment>
         <span><a href="https://www.patc.com.vn/">PATC</a> &copy; DMS Company.</span>
-        <span className="ml-auto">V.4.0.0 {this.props.userinfo} <a href="https://www.patc.com.vn/">Epicor Cust</a></span>
+        <span className="ml-auto">V.4.0.0 {userinfo} <a href="https://www.patc.com.vn/">Epicor Cust</a></span>
       </React.Fragment>
     );
   }
