@@ -38,6 +38,7 @@ const User = React.lazy(() => import('./views/Users/User'));
 
 const CustShipReport = React.lazy(() => import('./views/Report/CustShipIffCustDate'));
 const HomePage = React.lazy(() => import('./views/Home/HomePage'));
+const InventoryTransfer = React.lazy(() => import('./views/Transfer/InventoryTransfer'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -86,6 +87,8 @@ const routes = [
   { path: '/home', exact: true, name: 'HomePage', component: HomePage },
   { path: '/report', exact: true, name: 'Report', component: CustShipReport },
   { path: '/report/custshipreport', name: 'Cust Ship Inv Cuff Date', component: CustShipReport },
+
+  { path: '/inventory-transfer', exact: true, name: 'Inventory Transfer', component: InventoryTransfer },
 ];
 
 export default routes;

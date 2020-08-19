@@ -71,7 +71,7 @@ class CustShipIffCustDate extends Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 var groupList = responseJson.value[0].AllowAccess;
-                if (groupList.includes(username) == true) {
+                if (groupList.includes(username) === true) {
                    this.setState({ permission : true})
                 }
             })

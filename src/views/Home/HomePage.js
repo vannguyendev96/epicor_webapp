@@ -20,6 +20,10 @@ import { API_CUST } from '../../constant';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { askForPermissioToReceiveNotifications } from '../Notifications/firebase';
+
+//import firebase from '../Notifications/firebase';
+
 class HomePage extends Component {
 
     constructor(props) {
@@ -35,6 +39,7 @@ class HomePage extends Component {
         this.saveCompanyPlant = this.saveCompanyPlant.bind(this);
     }
 
+
     async componentDidMount() {
         this.get_dataCompany();
         await this.getCurrent_CompanyPlant();
@@ -46,10 +51,12 @@ class HomePage extends Component {
         await this.setData();
 
         this.setUserName();
+
+        
     }
 
     //set user name
-    async setUserName(){
+    async setUserName() {
         const token = getCookie("token");
         const userinfo = localStorage.getItem('userinfo');
         const parameters = {
@@ -65,7 +72,7 @@ class HomePage extends Component {
         await fetch(GetData_API_ENDPOINT, parameters)
             .then((response) => response.json())
             .then((responseJson) => {
-                localStorage.setItem('username',responseJson.value[0].Name);
+                localStorage.setItem('username', responseJson.value[0].Name);
             })
             .catch((error) => {
                 console.log(error)
@@ -86,7 +93,7 @@ class HomePage extends Component {
     //get company and plant current
     async getCurrent_CompanyPlant() {
         const token = getCookie("token");
-
+        console.log(token)
         const parameters = {
             method: 'POST',
             headers: {
@@ -99,6 +106,7 @@ class HomePage extends Component {
         await fetch(GetData_API_ENDPOINT, parameters)
             .then((response) => response.json())
             .then((responseJson) => {
+                console.log(responseJson)
                 this.setState({
                     defaultCompany: JSON.parse(JSON.stringify(responseJson.parameters.companyID)),
                     defaultPlant: JSON.parse(JSON.stringify(responseJson.parameters.siteID))
@@ -156,7 +164,7 @@ class HomePage extends Component {
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', 'Basic ' + token);
         headers.append('Access-Control-Allow-Origin', '*');
-        if(company !== null){
+        if (company !== null) {
             headers.append('CallSettings', setting);
         }
 
@@ -212,7 +220,7 @@ class HomePage extends Component {
         console.log("Company: " + this.props.company);
         console.log("Plant: " + this.props.plant);
 
-        if(this.props.company !== "" && this.props.plant !== ""){
+        if (this.props.company !== "" && this.props.plant !== "") {
             toast.success("Lưu company và plant thành công !")
         }
     }
@@ -268,7 +276,7 @@ class HomePage extends Component {
                                 </Col>
                                 <Col md="2">
                                     <FormGroup>
-                                        <Button block outline active color="primary" aria-pressed="true" onClick={this.saveCompanyPlant}>Save</Button>                       
+                                        <Button block outline active color="primary" aria-pressed="true" onClick={this.saveCompanyPlant}>Save</Button>
                                         <ToastContainer />
                                     </FormGroup>
                                 </Col>
